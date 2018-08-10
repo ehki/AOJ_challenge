@@ -1,0 +1,6 @@
+[package]
+name = "r0001"
+version = "0.1.0"
+authors = ["myb"]
+
+[dependencies]
