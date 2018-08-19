@@ -1,4 +1,6 @@
 from random import randrange,random
+from itertools import product
+
 def rotate_clockwise(matrix):
     return list(map(list, zip(*matrix)))[::-1]
 
@@ -7,11 +9,13 @@ with open("in0209_2.txt", "w") as f:
         n = randrange(5,10)
         m = randrange(1,n)
         f.write("%d %d\n"%(n,m))
-        w = [[ randrange(0,16) if random() > 0.3 else -1 for _ in range(n)] for __ in range(n)]
+        w = [[ randrange(0,16) for _ in range(n)] for __ in range(n)]
         psx = randrange(n-m)
         psy = randrange(n-m)
         print(psx+1,psy+1)
         p = [ w[k][psx:psx+m] for k in range(psy,psy+m) ]
+        p = p.copy()
+        p = [ [q[i] if random() > 0.3 else -1 for i in range(m)] for q in p]
         for i in range(randrange(4)):
             p = rotate_clockwise(p)
         for b in w:
