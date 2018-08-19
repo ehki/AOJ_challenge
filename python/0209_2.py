@@ -5,8 +5,8 @@ def rotate_clockwise(matrix):
     return list(map(list, zip(*matrix)))[::-1]
 
 with open("in0209_2.txt", "w") as f:
-    for _ in range(3):
-        n = randrange(5,10)
+    for _ in range(20):
+        n = randrange(10,100)
         m = randrange(1,n)
         f.write("%d %d\n"%(n,m))
         w = [[ randrange(0,16) for _ in range(n)] for __ in range(n)]
