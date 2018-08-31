@@ -29,3 +29,6 @@ Solved problems
 
 ## Scala
 `0000`  
+
+## Number of solved problems for each language
+![num_solved_problems.png](https://github.com/ehki/AOJ_challenge/blob/master/num_solved_problems.png?raw=true "Number of solved problems for each language")

@@ -1,12 +1,11 @@
 from matplotlib import pyplot as plt
 import matplotlib as mpl
-mpl.use('Agg')
 
 di = {}
 while(True):
     try: s = input()
     except: break
-    if s[:3] == "## ":
+    if s[:3] == "## " and s[3:] != "Number of solved problems for each language":
         di[s[3:]] = 0
         while(True):
             try: n = input()
@@ -20,5 +19,6 @@ while(True):
 plt.figure(figsize=(5,4),facecolor="W")
 for k,v in sorted(di.items(), key=lambda x: -x[1]):
     plt.bar(k,v)
+plt.ylabel("Number of solved problems")
 plt.savefig("num_solved_problems.png",dpi=200)
 plt.close()
