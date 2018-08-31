@@ -1,20 +1,16 @@
 while(True):
     m,n = map(int,input().split())
     if not m: break
-    a = [True]*m
-    j = -1
-    for i in range(1,n+1):
-        if sum(a) < 2: input(); continue
-        j = (j+1+((a+a)[j+1:]).index(True))%m
-        s = input()
-        if not i%15:
-            if s == "FizzBuzz": continue
-            else: a[j] = False; continue
-        if not i%5:
-            if s == "Buzz": continue
-            else: a[j] = False; continue
-        if not i%3:
-            if s == "Fizz": continue
-            else: a[j] = False; continue
-        if s != str(i): a[j] = False;continue
-    print(" ".join(str(e+1) for e in range(m) if a[e]))
+    a = list(range(1,m+1))
+    b = [input() for _ in range(n)]
+    t = [str(i+1) for i in range(n)]
+    t[2::3]   = ["Fizz"]*len(t[2::3])
+    t[4::5]   = ["Buzz"]*len(t[4::5])
+    t[14::15] = ["FizzBuzz"]*len(t[14::15])
+    i=0
+    for j in range(n):
+        if len(a) <2: break
+        if b[j] != t[j]: del a[i]; i = 0 if i >= len(a) else i; continue
+        i += 1
+        i = i%len(a)
+    print(" ".join(str(e) for e in a))
