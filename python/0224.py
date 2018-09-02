@@ -1,42 +1,6 @@
 # ref: http://lethe2211.hatenablog.com/entry/2014/12/30/011030
 # ref: http://d.hatena.ne.jp/simezi_tan/20101019/1287462266
-import heapq
 from heapq import heappop,heappush
-
-class Dijkstra(object):
-    def dijkstra(self, adj, start, goal=None):
-        num = len(adj)
-        dist = [float('inf') for i in range(num)]
-        prev = [float('inf') for i in range(num)]
-        
-        dist[start] = 0
-        q = []
-        heapq.heappush(q, (0, start))
-
-        while len(q) != 0:
-            prov_cost, src = heapq.heappop(q)
-            if dist[src] < prov_cost:
-                continue
-            for dest in range(num):
-                cost = adj[src][dest]
-                if cost != float('inf') and dist[dest] > dist[src] + cost:
-                    dist[dest] = dist[src] + cost
-                    heapq.heappush(q, (dist[dest], dest))
-                    prev[dest] = src
-        if goal is not None:
-            return self.get_path(goal, prev)
-        else:
-            return dist
-
-    def get_path(self, goal, prev):
-        path = [goal]
-        dest = goal
-        while prev[dest] != float('inf'):
-            path.append(prev[dest])
-            dest = prev[dest]
-        return list(reversed(path))
-
-
 
 if __name__ == '__main__':
     def id(s):
