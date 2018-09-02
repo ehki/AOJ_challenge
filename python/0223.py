@@ -15,7 +15,7 @@ def main():
         from pprint import pprint
         que = deque([[tx,ty,kx,ky,0]])
         # pa = [[[[False]*(W+2) for ii in range(H+2)] for jj in range(W+2)] for kk in range(H+2)]
-        pas = []
+        pas = set()
         ans = "NA"
         while(que):
             # if len(que)>10:break
@@ -35,10 +35,10 @@ def main():
                 tdx, tdy = [ dx, dy] if ma[ty+dy][tx+dx] else [0,0]
                 kdx, kdy = [-dx,-dy] if ma[ky-dy][kx-dx] else [0,0]
                 # if pa[tx+tdx][ty+tdy][kx+kdx][ky+kdy]: continue
-                if [tx+tdx,ty+tdy,kx+kdx,ky+kdy] in pas: continue
+                if (tx+tdx,ty+tdy,kx+kdx,ky+kdy) in pas: continue
                 que.append([tx+tdx,ty+tdy,kx+kdx,ky+kdy,c+1])
                 # pa[tx+tdx][ty+tdy][kx+kdx][ky+kdy] = True
-                pas.append([tx+tdx,ty+tdy,kx+kdx,ky+kdy])
+                pas.add((tx+tdx,ty+tdy,kx+kdx,ky+kdy))
         print(ans)
         # pprint(ma)
 
