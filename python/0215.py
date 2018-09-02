@@ -1,5 +1,5 @@
 from itertools import product
-from line_profiler import LineProfiler
+# from line_profiler import LineProfiler
 def main():
     while(True):
         W, H = map(int,input().split())
@@ -33,8 +33,8 @@ def main():
         print(ansi+1,ans)
 
 if __name__ == "__main__":
-    prf = LineProfiler()
-    prf.add_function(main)
-    prf.runcall(main)
-    prf.print_stats()
-    # main()
+    # prf = LineProfiler()
+    # prf.add_function(main)
+    # prf.runcall(main)
+    # prf.print_stats()
+    main()
