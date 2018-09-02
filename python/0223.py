@@ -1,4 +1,4 @@
-from line_profiler import LineProfiler
+# from line_profiler import LineProfiler
 from collections import deque
 
 def main():
@@ -43,8 +43,8 @@ def main():
         # pprint(ma)
 
 if __name__ == "__main__":
-    prf = LineProfiler()
-    prf.add_function(main)
-    prf.runcall(main)
-    prf.print_stats()
-    # main()
+    # prf = LineProfiler()
+    # prf.add_function(main)
+    # prf.runcall(main)
+    # prf.print_stats()
+    main()
