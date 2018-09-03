@@ -33,8 +33,8 @@ def main():
                     if dpCacheNow[i] > B:
                         print("",end="")
                         continue
-                    nownxtdists = [abs(nowy-nxty)+abs(nowx-nxtx) for j,[nxty,nxtx] in enumerate(emCacheNxt)]
-                    dpCacheNxt[j] = min(dpCacheNxt[j],dpCacheNow[i]+)
+                    for j,[nxty,nxtx] in enumerate(emCacheNxt):
+                        dpCacheNxt[j] = min(dpCacheNxt[j],dpCacheNow[i]+abs(nowy-nxty)+abs(nowx-nxtx))
                 now = nxt
                 dpCacheNow = dpCacheNxt
                 emCacheNow = emCacheNxt
