@@ -1,20 +1,23 @@
+# ref: http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=924554#1
 from itertools import product
 while(True):
     H,W = map(int,input().split())
     if not H: break
-    ma = 0
-    for i in range(H):
-        ma |= (int(input().replace(".","0").replace("*","1"),2) << ((H-i-1)*W))
-    flag = False
-    hw = [[h,w] for h,w in product(range(H,0,-1),range(W,0,-1))]
-    hw = sorted(hw,key=lambda x: -x[1]*x[0])
+    ma = [list(map(int,input().replace(".","1").replace("*","0")))+[0] for _ in range(H)]
+    for i,j in product(range(1,H),range(W)):
+        if ma[i][j]: ma[i][j] += ma[i-1][j]
     ans = 0
-    for h,w in hw:
-        for i,j in product(range(H-h+1),range(W-w+1)):
-            b = (sum([((2**w-1) << j) << k*W for k in range(h)]) ) << i*W
-            c = ma&b
-            if not c :flag = True; ans = max(ans,h*w); break
-        else:
-            continue
-        if flag: break
+    for i in range(H):
+        stk = []
+        for j in range(W+1):
+            cur = ma[i][j]
+            if (not stk) or stk[-1][1] < cur:
+                stk.append([j,cur])
+            elif stk[-1][1] > cur:
+                idx = j
+                while stk and stk[-1][1] >= cur:
+                    idx = stk[-1][0]
+                    ans = max(ans,stk[-1][1]*(j-stk[-1][0]))
+                    stk.pop()
+                stk.append([idx,cur])
     print(ans)
