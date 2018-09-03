@@ -17,8 +17,9 @@ while(True):
                 break
 
 plt.figure(figsize=(5,4),facecolor="W")
-for k,v in sorted(di.items(), key=lambda x: -x[1]):
+for i,[k,v] in enumerate(sorted(di.items(), key=lambda x: -x[1])):
     plt.bar(k,v)
+    plt.text(i,v,v,va="bottom",ha="center")
 plt.ylabel("Number of solved problems")
 plt.savefig("num_solved_problems.png",dpi=150)
 plt.close()
