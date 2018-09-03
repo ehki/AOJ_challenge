@@ -9,8 +9,8 @@ def main():
         ans = 10**10
         for i in range(H):
             for j,a in enumerate(input()):
-                if a == "S": ss = [[i,j]]
-                elif a == "G": gg = [[i,j]]
+                if a == "S": ss = [i,j]
+                elif a == "G": gg = [i,j]
                 elif a != ".": ps[int(a)-1].append([i,j])
         # if [1 for i in range(5) if len(ps[i])==0]:
         #     print("NA"); continue
@@ -18,22 +18,58 @@ def main():
         B = float("inf")
         Bi = -1
         for mon1 in range(5):
-            cand = [[0,ss[0][0],ss[0][1]]]
-            for mon2 in range(5):
-                nxt = ps[(mon1+mon2+1)%5] if mon2<4 else gg
-                # print(nxt)
-                # print(cand)
-                tmp = []
-                for ty,tx in nxt:
-                    tc = float("inf")
-                    # for cc,cy,cx in cand:
-                    if cand:
-                        tc = min([abs(ty-cy)+abs(tx-cx)+cc for cc,cy,cx in cand])
-                    tmp.append([tc,ty,tx])
-                cand = tmp
-            if cand[0][0] < B:
-                B = cand[0][0]
-                Bi = mon1
+            dp = [[float("inf")]*1000 for _ in range(5)]
+            # cand = [[0,ss[0][0],ss[0][1]]]
+            now = (mon1+1)%5
+            dpCacheNow = dp[now]
+            emCacheNow = ps[now]
+            for i,[ty,tx] in enumerate(emCacheNow):
+                dpCacheNow[i] = abs(ss[0]-ty) + abs(ss[1]-tx)
+            for e in range(3):
+                nxt = (now+1)%5
+                dpCacheNxt = dp[nxt]
+                emCacheNxt = ps[nxt]
+                for i,[nowy,nowx] in enumerate(emCacheNow):
+                    if dpCacheNow[i] > B:
+                        print("",end="")
+                        continue
+                    nownxtdists = [abs(nowy-nxty)+abs(nowx-nxtx) for j,[nxty,nxtx] in enumerate(emCacheNxt)]
+                    dpCacheNxt[j] = min(dpCacheNxt[j],dpCacheNow[i]+)
+                now = nxt
+                dpCacheNow = dpCacheNxt
+                emCacheNow = emCacheNxt
+            for i,[ey,ex] in enumerate(emCacheNxt):
+                tmp = dpCacheNxt[i] + abs(gg[0]-ey) + abs(gg[1]-ex)
+                if tmp < B:
+                    B = tmp
+                    Bi = mon1
+            # for mon2 in range(5):
+            #     # dpCacheNow = dp[mon2]
+            #     # dpCacheNxt = dp[(mon1+mon2+1)%5]
+            #     # dpCacheNow[0] = 0
+            #     nxt = ps[(mon1+mon2+1)%5] if mon2<4 else gg
+            #     # print(nxt)
+            #     # print(cand)
+            #     tmp = []
+            #     for i,[ty,tx] in enumerate(nxt):
+            #         # if dpCacheNow[i] >= B:
+            #         #     continue
+            #         tc = float("inf")
+            #         # for cc,cy,cx in cand:
+            #         for cc,cy,cx in cand:
+            #             # if cc > B:
+            #             #     # print("a",end="")
+            #             #     tc = float("inf")
+            #             #     break
+            #             # else:
+            #             tc = min(tc,abs(ty-cy)+abs(tx-cx)+cc)
+            #             tc
+            #         tmp.append([tc,ty,tx])
+            #         # dpCacheNxt[i] = min(dpCacheNxt[i],tc)
+            #     cand = tmp
+            # if cand[0][0] < B:
+            #     B = cand[0][0]
+            #     Bi = mon1
         if(Bi == -1):
             print("NA")
         else:
