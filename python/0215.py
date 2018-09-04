@@ -1,12 +1,14 @@
 from itertools import product
-from line_profiler import LineProfiler
+# from array import array
+# from math import fabs
+# from line_profiler import LineProfiler
 def main():
     while(True):
         W, H = map(int,input().split())
         if not W: break
         # ma = [[-1]*(W+2) for _ in range(H+2)]
         ps = [[] for _ in range(5)]
-        ans = 10**10
+        ans = float('inf')
         for i in range(H):
             for j,a in enumerate(input()):
                 if a == "S": ss = [i,j]
@@ -15,10 +17,13 @@ def main():
         # if [1 for i in range(5) if len(ps[i])==0]:
         #     print("NA"); continue
         # print(ps)
-        B = float("inf")
+        B = float('inf')
         Bi = -1
+        abss = [[[ abs(y1-y2)+abs(x1-x2) for y1,x1 in ps[(i+1)%5]] for y2,x2 in ps[i]] for i in range(5) ]
+        # print(abss)
+        # break
         for mon1 in range(5):
-            dp = [[float("inf")]*1000 for _ in range(5)]
+            dp = [[float('inf')]*1000 for _ in range(5)]
             # cand = [[0,ss[0][0],ss[0][1]]]
             now = (mon1+1)%5
             dpCacheNow = dp[now]
@@ -29,12 +34,18 @@ def main():
                 nxt = (now+1)%5
                 dpCacheNxt = dp[nxt]
                 emCacheNxt = ps[nxt]
-                for i,[nowy,nowx] in enumerate(emCacheNow):
-                    if dpCacheNow[i] > B:
-                        print("",end="")
-                        continue
-                    for j,[nxty,nxtx] in enumerate(emCacheNxt):
-                        dpCacheNxt[j] = min(dpCacheNxt[j],dpCacheNow[i]+abs(nowy-nxty)+abs(nowx-nxtx))
+                for [nowy,nowx],[i,dpnow] in zip(emCacheNow,enumerate(dpCacheNow)):
+                    abssCacheNow = abss[now][i]
+                    # if dpCacheNow[i] > B:
+                    #     print("",end="")
+                    #     continue
+                    dpCacheNxt = [min(dpc,dpnow+abc) for dpc,abc in zip(dpCacheNxt,abssCacheNow)]
+                    # for j in range(len(emCacheNxt)):
+                        # if abss[now][i][j] > B:
+                        #     print("",end="")
+                        #     continue
+                        # print(now,nxt)
+                        # dpCacheNxt[j] = 
                 now = nxt
                 dpCacheNow = dpCacheNxt
                 emCacheNow = emCacheNxt
@@ -54,12 +65,12 @@ def main():
             #     for i,[ty,tx] in enumerate(nxt):
             #         # if dpCacheNow[i] >= B:
             #         #     continue
-            #         tc = float("inf")
+            #         tc = float('inf')
             #         # for cc,cy,cx in cand:
             #         for cc,cy,cx in cand:
             #             # if cc > B:
             #             #     # print("a",end="")
-            #             #     tc = float("inf")
+            #             #     tc = float('inf')
             #             #     break
             #             # else:
             #             tc = min(tc,abs(ty-cy)+abs(tx-cx)+cc)
@@ -76,7 +87,7 @@ def main():
             print("%d %d"%(Bi+1,B))
         # for mon1 in range(5):
         #     mon2 = (mon1+1)%5
-        #     dp = [[10**10]*1000 for _ in range(5)]
+        #     dp = [[float('inf')]*1000 for _ in range(5)]
         #     for i,yx in enumerate(ps[mon2]):
         #         dp[mon2][i] = abs(ss[0]-yx[0])+abs(ss[1]-yx[1])
         #     mon3 = mon2
@@ -93,8 +104,8 @@ def main():
         # print(ansi+1,ans)
 
 if __name__ == "__main__":
-    prf = LineProfiler()
-    prf.add_function(main)
-    prf.runcall(main)
-    prf.print_stats()
-    # main()
+    # prf = LineProfiler()
+    # prf.add_function(main)
+    # prf.runcall(main)
+    # prf.print_stats()
+    main()
