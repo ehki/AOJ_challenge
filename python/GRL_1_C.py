@@ -1,14 +1,19 @@
+from itertools import product
 V,E = map(int,input().split())
-edges = [tuple(map(int,input().split())) for _ in range(E)]
-strs = []
-for r in range(V):
-    dist = [float("inf") for _ in range(V)]
-    dist[r-1] = 0
-    for i in range(V+1):
-        for edge in edges:
-            if edge[0] != float("inf") and dist[edge[1]-1] > dist[edge[0]-1]+edge[2]:
-                dist[edge[1]-1] = dist[edge[0]-1]+edge[2]
-                if i==V-1: print("NEGATIVE CYCLE"); exit()
-    strs.append(" ".join(str(dist[e-1]) if dist[e-1] != float("inf") else "INF" for e in range(V)))
-for st in strs:
-    print(st)
+edges = [tuple() for _ in range(E)]
+dist = [[float("inf")]*V for _ in range(V)]
+for i in range(V):
+    dist[i][i] = 0
+for _ in range(E):
+    s,t,d = map(int,input().split())
+    dist[s][t] = d
+for k,i,j in product(range(V),range(V),range(V)):
+    if dist[i][k] != float("inf") and dist[k][j] != float("inf"):
+        dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j])
+for i in range(V):
+    if dist[i][i] < 0:
+        print("NEGATIVE CYCLE")
+        exit()
+for i in range(V):
+    ans = ["INF" if dist[i][j] == float("inf") else dist[i][j] for j in range(V)]
+    print(" ".join(map(str, ans)))
